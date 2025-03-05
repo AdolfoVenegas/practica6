@@ -16,9 +16,9 @@ import android.widget.TextView
 class catalago : AppCompatActivity() {
 
     var adapter: PeliculaAdapter? = null
-    var seriesAdapter: PeliculaAdapter? = null
+    var seriesAdapter: SerieAdapter? = null
     var peliculas = ArrayList<Pelicula>()
-    var series = ArrayList<Pelicula>()
+    var series = ArrayList<Serie>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +28,7 @@ class catalago : AppCompatActivity() {
         cargarSeries()
 
         adapter=PeliculaAdapter(this,peliculas)
-        seriesAdapter=PeliculaAdapter(this,series)
+        seriesAdapter=SerieAdapter(this,series)
         var gridPelis: GridView=findViewById(R.id.movies_catalogo)
         var gridSeries: GridView=findViewById(R.id.series_catalogo)
 
@@ -46,17 +46,64 @@ class catalago : AppCompatActivity() {
         peliculas.add(Pelicula("Madame Web", R.drawable.madameweb,R.drawable.madame,"“Mientras tanto, en otro universo…” En un cambio del típico género, Madame Web cuenta la historia independiente del origen de una de las heroínas más enigmáticas de la editorial Marvel. El thriller de suspenso protagonizado por Dakota Johnson como Cassandra Webb, una paramédico de Manhattan que puede tener habilidades clarividentes. Forzada a enfrentarse a revelaciones de su pasado, ella forja una relación con tres mujeres jóvenes destinadas a tener poderosos futuros… si pueden sobrevivir a un presente mortal.", arrayListOf<Cliente>()))
     }
     fun cargarSeries(){
-        peliculas.add(Pelicula("Avatar: La leyenda de Aang",R.drawable.avatar, R.drawable.avatar, "La leyenda de Aang sigue al último sobreviviente de los Nómadas del Aire, quien deberá restaurar el equilibrio en el mundo entre las tres naciones restantes: la Tribu del Agua, el Reino Tierra y la Nación del Fuego.", arrayListOf<Cliente>()))
-        peliculas.add(Pelicula("Halo", R.drawable.halo, R.drawable.halos, "Una evacuación mortal cambia la guerra del Jefe Maestro con el Covenant. En Reach, un nuevo régimen toma el mando en FLEETCOM. John siente una amenaza inminente cerca. Estreno de temporada.", arrayListOf<Cliente>()))
-        peliculas.add(Pelicula("Solo Leveling", R.drawable.sololeveling,R.drawable.sololevelings, "En un mundo en el que ciertos humanos llamados “cazadores” poseen habilidades mágicas, estos deben luchar contra monstruos para proteger a la raza humana de una aniquilación segura. Un cazador muy débil llamado Sung Jinwoo se encuentra en una lucha en la que solo puede tratar de sobrevivir.", arrayListOf<Cliente>()))
-        peliculas.add(Pelicula("Mi Adorable Demonio", R.drawable.adorabledemonio, R.drawable.adorabledemonios, "Se centra en la vida de Jung Koo Won, un temerario demonio que pierde sus poderes tras conocer a Do Do-Hee, una exitosa empresaria con la que deberá de colaborar para recuperarlos.", arrayListOf<Cliente>()))
-        peliculas.add(Pelicula("El monstruo de la vieja Seul", R.drawable.elmonstruo, R.drawable.elmonstruovieja, "Gyeongseong, 1945. En la oscura era colonial de Seúl, un empresario y una investigadora luchan por sobrevivir y se enfrentan a un monstruo nacido de la avaricia humana.", arrayListOf<Cliente>()))
-        peliculas.add(Pelicula("Witcher", R.drawable.thewitcher,R.drawable.thewitchers, "Geralt de Rivia, un cazador de monstruos mutante, viaja en pos de su destino por un mundo turbulento en el que, a menudo, los humanos son peores que las bestias.", arrayListOf<Cliente>()))
+        series.add(Serie("Avatar: La leyenda de Aang",R.drawable.avatar, R.drawable.avatar, "La leyenda de Aang sigue al último sobreviviente de los Nómadas del Aire, quien deberá restaurar el equilibrio en el mundo entre las tres naciones restantes: la Tribu del Agua, el Reino Tierra y la Nación del Fuego.", arrayListOf<Cliente>()))
+        series.add(Serie("Halo", R.drawable.halo, R.drawable.halos, "Una evacuación mortal cambia la guerra del Jefe Maestro con el Covenant. En Reach, un nuevo régimen toma el mando en FLEETCOM. John siente una amenaza inminente cerca. Estreno de temporada.", arrayListOf<Cliente>()))
+        series.add(Serie("Solo Leveling", R.drawable.sololeveling,R.drawable.sololevelings, "En un mundo en el que ciertos humanos llamados “cazadores” poseen habilidades mágicas, estos deben luchar contra monstruos para proteger a la raza humana de una aniquilación segura. Un cazador muy débil llamado Sung Jinwoo se encuentra en una lucha en la que solo puede tratar de sobrevivir.", arrayListOf<Cliente>()))
+        series.add(Serie("Mi Adorable Demonio", R.drawable.adorabledemonio, R.drawable.adorabledemonios, "Se centra en la vida de Jung Koo Won, un temerario demonio que pierde sus poderes tras conocer a Do Do-Hee, una exitosa empresaria con la que deberá de colaborar para recuperarlos.", arrayListOf<Cliente>()))
+        series.add(Serie("El monstruo de la vieja Seul", R.drawable.elmonstruo, R.drawable.elmonstruovieja, "Gyeongseong, 1945. En la oscura era colonial de Seúl, un empresario y una investigadora luchan por sobrevivir y se enfrentan a un monstruo nacido de la avaricia humana.", arrayListOf<Cliente>()))
+        series.add(Serie("Witcher", R.drawable.thewitcher,R.drawable.thewitchers, "Geralt de Rivia, un cazador de monstruos mutante, viaja en pos de su destino por un mundo turbulento en el que, a menudo, los humanos son peores que las bestias.", arrayListOf<Cliente>()))
     }
 
 
 }
+class SerieAdapter:BaseAdapter{
+    var series = ArrayList<Serie>()
+    var context: Context? = null
 
+    constructor(context: Context, series: ArrayList<Serie>) : super(){
+        this.series=series
+        this.context=context
+    }
+
+    override fun getCount(): Int {
+        return series.size
+    }
+
+    override fun getItem(p0: Int): Any{
+        return series[p0]
+    }
+
+    override fun getItemId(p0: Int): Long{
+        return p0.toLong()
+    }
+
+    override fun getView(pe: Int, p1: View?, p2: ViewGroup): View{
+        var serie=series[pe]
+        var inflator=context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        var vista=inflator.inflate(R.layout.serie, null)
+        var image: ImageView=vista.findViewById(R.id.image_serie_cell)
+        var title:TextView=vista.findViewById(R.id.serie_tittle_cell)
+
+        image.setImageResource(serie.image)
+        title.setText(serie.titulo)
+
+        image.setOnClickListener (){
+            var seatsAvailable = 20-serie.seats.size
+            Log.d("SEATS","$seatsAvailable")
+            val intent = Intent(context, detalle_pelicula::class.java)
+            intent.putExtra("titulo",serie.titulo)
+            intent.putExtra("imagen", serie.image)
+            intent.putExtra("header", serie.header)
+            intent.putExtra("sinopsis", serie.sipnosis)
+            intent.putExtra("numberSeats",(20-serie.seats.size))
+            intent.putExtra("pos", pe)
+            context!!.startActivity(intent)
+        }
+        return vista
+
+    }
+
+}
 class PeliculaAdapter:BaseAdapter {
     var peliculas = ArrayList<Pelicula>()
     var context: Context? = null

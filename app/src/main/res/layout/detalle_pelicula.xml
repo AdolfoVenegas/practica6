@@ -22,7 +22,6 @@
             android:id="@+id/tv_nombre_pelicula"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:paddingLeft="25dp"
             android:text="HALO"
             android:textSize="20sp"
             android:textColor="@color/yellow"
